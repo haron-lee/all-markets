@@ -1,12 +1,13 @@
 import React from 'react';
-import Logo from '../../assets/Logo-hodu.png';
-import Search from '../../assets/search.svg';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import Logo from '../../assets/Logo-hodu.png';
+import Search from '../../assets/search.svg';
+import Cart from '../../assets/icon-shopping-cart.svg';
+import User from '../../assets/icon-user.svg';
 
 //TODO
 // form submit 함수
-// Link 스타일링
 const Nav = () => {
   return (
     <NavWrap>
@@ -24,7 +25,7 @@ const Nav = () => {
         </LogoWrap>
         <LinkWrap>
           <LinkStyle to="/cart">장바구니</LinkStyle>
-          <LinkStyle to="/login">로그인</LinkStyle>
+          <LinkStyle2 to="/login">로그인</LinkStyle2>
         </LinkWrap>
       </NavStyle>
     </NavWrap>
@@ -78,20 +79,28 @@ const LogoWrap = styled.div`
 `;
 
 const LinkWrap = styled.div`
-  a:first-child {
-    margin-right: 26px;
-  }
+  display: flex;
+  gap: 26px;
 `;
 
 const LinkStyle = styled(Link)`
+  color: var(--gray);
+
   &::before {
     content: '';
+    display: block;
+    margin: auto;
+    margin-bottom: 4px;
     width: 32px;
     height: 32px;
-    background: url();
+    background: url(${Cart}) no-repeat center center;
   }
+`;
 
-  color: red;
+const LinkStyle2 = styled(LinkStyle)`
+  &::before {
+    background: url(${User}) no-repeat center center;
+  }
 `;
 
 export default Nav;

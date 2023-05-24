@@ -5,6 +5,7 @@ const GlobalStyle = createGlobalStyle`
   ${reset}
   :root {
     --primary: #21BF48;
+    --gray: #767676;
   }
 
   * {
