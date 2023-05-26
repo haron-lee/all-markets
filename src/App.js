@@ -1,15 +1,15 @@
 import React from 'react';
 import GlobalStyle from './GlobalStyle';
-import Nav from './Components/layout/Nav';
 import { Routes, Route } from 'react-router-dom';
+import Home from './pages/Home';
 
 function App() {
   return (
     <>
       <GlobalStyle />
-      <Nav />
+      <Home />
       <Routes>
-        <Route path="/" element=""></Route>
+        <Route path="/"></Route>
       </Routes>
     </>
   );

@@ -1,10 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import Logo from '../../assets/Logo-hodu.png';
-import Search from '../../assets/search.svg';
-import Cart from '../../assets/icon-shopping-cart.svg';
-import User from '../../assets/icon-user.svg';
+import Logo from '../../assets/icons/Logo-hodu.png';
+import Search from '../../assets/icons/search.svg';
+import Cart from '../../assets/icons/icon-shopping-cart.svg';
+import User from '../../assets/icons/icon-user.svg';
 
 //TODO
 // form submit 함수
