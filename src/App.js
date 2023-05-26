@@ -7,9 +7,8 @@ function App() {
   return (
     <>
       <GlobalStyle />
-      <Home />
       <Routes>
-        <Route path="/"></Route>
+        <Route path="/" element={<Home />} />
       </Routes>
     </>
   );
