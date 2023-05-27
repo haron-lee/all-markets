@@ -1,4 +1,4 @@
-import { React, useState, useEffect } from 'react';
+import { React, useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import ProductItem from '../common/ProductItem';
 
@@ -6,13 +6,14 @@ import ProductItem from '../common/ProductItem';
 const Main = () => {
   const [products, setProducts] = useState([]);
   const [productPageNum, setProductPageNum] = useState(0);
+  const listRef = useRef(null);
 
   // count 80, results에 상품목록
   const url = 'https://openmarket.weniv.co.kr/products';
 
-  const getData = async () => {
+  const getData = async (page) => {
     try {
-      const data = await fetch(url);
+      const data = await fetch(`${url}?page=${page}`);
       if (!data.ok) {
         throw new Error('네트워크 응답에 문제가 있습니다.');
       }
@@ -36,23 +37,36 @@ const Main = () => {
   }, []);
 
   useEffect(() => {
-    getData();
+    getData(1);
   }, []);
 
   console.log(products);
 
+  const handlePageClick = (page) => {
+    getData(page);
+    listRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
+
   const renderPages = () => {
     const pages = [];
     for (let i = 1; i <= productPageNum; i++) {
-      pages.push(<PageNums key={i}>{i}</PageNums>);
+      pages.push(
+        <PageNums key={i} onClick={() => handlePageClick(i)}>
+          {i}
+        </PageNums>
+      );
     }
     return pages;
   };
 
+  useEffect(() => {
+    listRef.current.scrollTop = 0;
+  }, [products]);
+
   return (
     <MainStyle>
       <h2 className="a11y-hidden">판매 상품 목록</h2>
-      <ListStyle>
+      <ListStyle ref={listRef}>
         <ProductItem products={products} />
       </ListStyle>
       <PageNumsWrap>
@@ -71,6 +85,8 @@ const ListStyle = styled.ul`
   display: grid;
   gap: 70px;
   grid-template-columns: repeat(3, 1fr);
+  scroll-margin-top: 70px;
+  overflow-anchor: none;
 `;
 
 const PageNumsWrap = styled.div`
@@ -81,10 +97,16 @@ const PageNumsWrap = styled.div`
 
   div {
     display: flex;
+    flex-shrink: 0;
     gap: 10px;
   }
 `;
 
-const PageNums = styled.button``;
+const PageNums = styled.button`
+  cursor: pointer;
+  border: none;
+  background: transparent;
+  font-size: 18px;
+`;
 
 export default Main;

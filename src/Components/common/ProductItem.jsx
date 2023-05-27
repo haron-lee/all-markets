@@ -11,6 +11,7 @@ const ProductItem = ({ products }) => {
           return (
             <Card key={item.product_id}>
               <img src={item.image} alt={item.product_info} />
+              <p className="desc">{item.store_name}</p>
               <p className="title">{item.product_name}</p>
               <p className="price">
                 <strong>{item.price}</strong>원
@@ -27,6 +28,11 @@ const Card = styled.li`
   display: flex;
   flex-direction: column;
   gap: 10px;
+
+  img {
+    width: 380px;
+    height: 380px;
+  }
 
   .desc {
     color: var(--gray);
