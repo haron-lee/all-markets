@@ -6,6 +6,10 @@ const GlobalStyle = createGlobalStyle`
   :root {
     --primary: #21BF48;
     --gray: #767676;
+    --footer-bg: #f2f2f2;
+
+    /* html */
+    height: 100vh;
   }
 
   * {
