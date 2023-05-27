@@ -143,9 +143,4 @@ const FooterStyle = styled.div`
   }
 `;
 
-const FooterTitle = styled.span`
-  padding-right: 14px;
-  border-right: 1px solid black;
-`;
-
 export default Footer;
