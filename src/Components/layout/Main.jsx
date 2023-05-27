@@ -1,25 +1,63 @@
-import React from 'react';
+import { React, useState, useEffect } from 'react';
 import styled from 'styled-components';
+import ProductItem from '../common/ProductItem';
 
 // TODO alt값 넣기
 const Main = () => {
+  const [products, setProducts] = useState([]);
+  const [productPageNum, setProductPageNum] = useState(0);
+
+  // count 80, results에 상품목록
+  const url = 'https://openmarket.weniv.co.kr/products';
+
+  const getData = async () => {
+    try {
+      const data = await fetch(url);
+      if (!data.ok) {
+        throw new Error('네트워크 응답에 문제가 있습니다.');
+      }
+      const productsData = await data.json();
+      setProducts(productsData.results);
+      let productPageNum = Math.ceil(
+        productsData.count / productsData.results.length
+      );
+      setProductPageNum(productPageNum);
+    } catch (error) {
+      console.error('에러가 발생했습니다', error);
+    }
+  };
+
+  // console.log 용!!
+  useEffect(() => {
+    fetch(url)
+      .then((res) => res.json())
+      .then((data) => console.log(data))
+      .catch((error) => console.error(error));
+  }, []);
+
+  useEffect(() => {
+    getData();
+  }, []);
+
+  console.log(products);
+
+  const renderPages = () => {
+    const pages = [];
+    for (let i = 1; i <= productPageNum; i++) {
+      pages.push(<PageNums key={i}>{i}</PageNums>);
+    }
+    return pages;
+  };
+
   return (
     <MainStyle>
       <h2 className="a11y-hidden">판매 상품 목록</h2>
       <ListStyle>
-        <Card>
-          <img
-            src="https://www.charitycomms.org.uk/wp-content/uploads/2019/02/placeholder-image-square.jpg"
-            alt=""
-          />
-          {/* TODO: 제목 및 내용 길경우 고려 */}
-          <p className="desc">우당탕탕 라이캣의 실험실</p>
-          <p className="title">Hack Your Life 개발자 노트북 파우치</p>
-          <p className="amount">
-            <strong>29,000</strong>원
-          </p>
-        </Card>
+        <ProductItem products={products} />
       </ListStyle>
+      <PageNumsWrap>
+        <div>{renderPages()}</div>
+      </PageNumsWrap>
     </MainStyle>
   );
 };
@@ -35,27 +73,18 @@ const ListStyle = styled.ul`
   grid-template-columns: repeat(3, 1fr);
 `;
 
-const Card = styled.li`
-  max-width: 380px;
+const PageNumsWrap = styled.div`
+  margin-top: 70px;
   display: flex;
-  flex-direction: column;
-  gap: 10px;
+  justify-content: center;
+  align-items: center;
 
-  .desc {
-    color: var(--gray);
-  }
-
-  .title {
-    font-size: 18px;
-  }
-
-  .amount {
-    strong {
-      margin-right: 2px;
-      font-size: 24px;
-      font-weight: 700;
-    }
+  div {
+    display: flex;
+    gap: 10px;
   }
 `;
+
+const PageNums = styled.button``;
 
 export default Main;
