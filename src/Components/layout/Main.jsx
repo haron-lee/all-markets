@@ -19,9 +19,7 @@ const Main = () => {
       }
       const productsData = await data.json();
       setProducts(productsData.results);
-      let productPageNum = Math.ceil(
-        productsData.count / productsData.results.length
-      );
+      let productPageNum = Math.ceil(productsData.count / 15);
       setProductPageNum(productPageNum);
     } catch (error) {
       console.error('에러가 발생했습니다', error);

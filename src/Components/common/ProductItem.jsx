@@ -4,6 +4,9 @@ import styled from 'styled-components';
 // ToDo: 제목 및 내용 길경우 고려
 
 const ProductItem = ({ products }) => {
+  const priceDivide = (price) => {
+    return price.toLocaleString();
+  };
   return (
     <>
       {products &&
@@ -14,7 +17,7 @@ const ProductItem = ({ products }) => {
               <p className="desc">{item.store_name}</p>
               <p className="title">{item.product_name}</p>
               <p className="price">
-                <strong>{item.price}</strong>원
+                <strong>{priceDivide(item.price)}</strong>원
               </p>
             </Card>
           );
