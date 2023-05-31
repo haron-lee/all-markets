@@ -1,53 +1,35 @@
 import { React, useState, useEffect, useRef } from 'react';
+import getProducts from '../../api/products';
 import styled from 'styled-components';
 import ProductItem from '../common/ProductItem';
 
 // TODO alt값 넣기
 const Main = () => {
   const [products, setProducts] = useState([]);
-  const [productPageNum, setProductPageNum] = useState(0);
+  const [productPageNum, setProductPageNum] = useState(1);
+  const [pageNum, setPageNum] = useState(1);
   const listRef = useRef(null);
 
-  // count 80, results에 상품목록
-  const url = 'https://openmarket.weniv.co.kr/products';
-
-  const getData = async (page) => {
-    try {
-      const data = await fetch(`${url}?page=${page}`);
-      if (!data.ok) {
-        throw new Error('네트워크 응답에 문제가 있습니다.');
-      }
-      const productsData = await data.json();
-      setProducts(productsData.results);
-      let productPageNum = Math.ceil(productsData.count / 15);
-      setProductPageNum(productPageNum);
-    } catch (error) {
-      console.error('에러가 발생했습니다', error);
-    }
-  };
-
-  // console.log 용!!
   useEffect(() => {
-    fetch(url)
-      .then((res) => res.json())
-      .then((data) => console.log(data))
-      .catch((error) => console.error(error));
-  }, []);
-
-  useEffect(() => {
-    getData(1);
-  }, []);
+    getProducts(productPageNum).then((res) => {
+      setProducts(res.results);
+      let productPageNum = Math.ceil(res.count / 15);
+      setPageNum(productPageNum);
+    });
+    // getData(1);
+  }, [productPageNum]);
 
   console.log(products);
 
   const handlePageClick = (page) => {
-    getData(page);
+    setProductPageNum(page);
     listRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
 
+  // pagination 번호
   const renderPages = () => {
     const pages = [];
-    for (let i = 1; i <= productPageNum; i++) {
+    for (let i = 1; i <= pageNum; i++) {
       pages.push(
         <PageNums key={i} onClick={() => handlePageClick(i)}>
           {i}

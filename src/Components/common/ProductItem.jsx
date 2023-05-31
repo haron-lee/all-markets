@@ -4,20 +4,19 @@ import styled from 'styled-components';
 // ToDo: 제목 및 내용 길경우 고려
 
 const ProductItem = ({ products }) => {
-  const priceDivide = (price) => {
-    return price.toLocaleString();
-  };
   return (
     <>
       {products &&
         products.map((item) => {
           return (
             <Card key={item.product_id}>
-              <img src={item.image} alt={item.product_info} />
+              <div>
+                <img src={item.image} alt={item.product_info} />
+              </div>
               <p className="desc">{item.store_name}</p>
               <p className="title">{item.product_name}</p>
               <p className="price">
-                <strong>{priceDivide(item.price)}</strong>원
+                <strong>{item.price.toLocaleString()}</strong>원
               </p>
             </Card>
           );
@@ -32,9 +31,15 @@ const Card = styled.li`
   flex-direction: column;
   gap: 10px;
 
-  img {
-    width: 380px;
-    height: 380px;
+  div {
+    max-width: 380px;
+    max-height: 380px;
+
+    img {
+      object-fit: cover;
+      width: 100%;
+      height: 100%;
+    }
   }
 
   .desc {
