@@ -35,6 +35,8 @@ const Nav = () => {
 const NavWrap = styled.div`
   width: 100%;
   box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.2);
+  position: relative;
+  z-index: 9999;
 `;
 
 const NavStyle = styled.nav`
