@@ -31,10 +31,18 @@ const Card = styled.li`
   flex-direction: column;
   gap: 10px;
 
+  &:hover {
+    transform: scale(1.02);
+    transition: all 0.3s ease-in-out;
+  }
+
   div {
     max-width: 380px;
     height: 380px;
     overflow: hidden;
+    border-radius: 20px;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
 
     img {
       object-fit: cover;

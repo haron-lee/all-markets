@@ -27,6 +27,11 @@ const GlobalStyle = createGlobalStyle`
     position: absolute;
   }
 
+  button {
+    border: none;
+    background-color: inherit;
+  }
+
   a {
     text-decoration: none;
     color: inherit;

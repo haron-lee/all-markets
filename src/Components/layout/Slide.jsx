@@ -86,13 +86,13 @@ const sharedButtonStyles = css`
 
 const SlideLeftBtn = styled.button`
   ${sharedButtonStyles}
-  left: 40px;
+  left: 100px;
   background-image: url(${left});
 `;
 
 const SlideRightBtn = styled.button`
   ${sharedButtonStyles}
-  right: 40px;
+  right: 100px;
   background-image: url(${right});
 `;
 

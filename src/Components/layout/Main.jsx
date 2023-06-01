@@ -46,6 +46,14 @@ const Main = () => {
   return (
     <MainStyle>
       <h2 className="a11y-hidden">판매 상품 목록</h2>
+      <FilterStyle>
+        <button type="button" disabled>
+          최신등록순
+        </button>
+        <button type="button" disabled>
+          인기도순
+        </button>
+      </FilterStyle>
       <ListStyle ref={listRef}>
         <ProductItem products={products} />
       </ListStyle>
@@ -58,13 +66,43 @@ const Main = () => {
 
 const MainStyle = styled.main`
   max-width: 1280px;
-  margin: 80px auto;
+  margin: 60px auto;
+`;
+
+const FilterStyle = styled.div`
+  position: relative;
+  max-width: 200px;
+  margin: 0 0 40px auto;
+  display: flex;
+  justify-content: space-between;
+
+  button {
+    cursor: pointer;
+    font-size: 18px;
+  }
+
+  button:first-child {
+    &::after {
+      content: '';
+      display: block;
+      position: absolute;
+      top: 50%;
+      left: 54%;
+      transform: translate(-50%, -50%);
+      width: 1px;
+      height: 16px;
+      background-color: rgba(0, 0, 0, 0.2);
+    }
+  }
+
+  button:last-child {
+  }
 `;
 
 const ListStyle = styled.ul`
   display: grid;
   gap: 70px;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
   scroll-margin-top: 70px;
   overflow-anchor: none;
 `;
