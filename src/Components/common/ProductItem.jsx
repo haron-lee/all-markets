@@ -33,7 +33,8 @@ const Card = styled.li`
 
   div {
     max-width: 380px;
-    max-height: 380px;
+    height: 380px;
+    overflow: hidden;
 
     img {
       object-fit: cover;
