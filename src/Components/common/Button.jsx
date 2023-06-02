@@ -11,9 +11,11 @@ const Button = (props) => {
 };
 
 const BtnStyle = styled.button`
+  display: block;
   color: white;
-  background: orangered;
-  padding: 10px 20px;
+  background: var(--primary);
+  padding: 20px;
+  cursor: pointer;
 `;
 
 export default Button;
