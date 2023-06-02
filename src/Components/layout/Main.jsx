@@ -1,7 +1,7 @@
 import { React, useState, useEffect, useRef } from 'react';
 import getProducts from '../../api/products';
 import styled from 'styled-components';
-import ProductItem from '../common/ProductItem';
+import ProductItem from '../ProductItems/ProductItem';
 
 // TODO alt값 넣기
 const Main = () => {
@@ -102,7 +102,7 @@ const FilterStyle = styled.div`
 const ListStyle = styled.ul`
   display: grid;
   gap: 70px;
-  grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
   scroll-margin-top: 70px;
   overflow-anchor: none;
 `;

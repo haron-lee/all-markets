@@ -1,6 +1,6 @@
 import React from 'react';
-import Nav from '../Components/layout/Nav';
-import Slide from '../Components/layout/Slide';
+import Nav from '../Components/common/Nav';
+import Slide from '../Components/Slide/Slide';
 import Main from '../Components/layout/Main';
 import Footer from '../Components/layout/Footer';
 

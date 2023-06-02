@@ -2,17 +2,27 @@ const { createGlobalStyle } = require('styled-components');
 const { default: reset } = require('styled-reset');
 
 const GlobalStyle = createGlobalStyle`
+  /* Font */
+  @font-face {
+      font-family: 'Pretendard-Regular';
+      src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+      font-weight: 400;
+      font-style: normal;
+  }
+
+  /* Reset */
   ${reset}
+
+  /* 컬러 변수 및 html */
   :root {
     --primary: #21BF48;
     --gray: #767676;
     --footer-bg: #f2f2f2;
+    --border: #c4c4c4;
 
     /* html */
     height: 100vh;
-  }
-
-  * {
+    font-family: 'Pretendard-Regular';
     box-sizing: border-box;
   }
 
@@ -35,6 +45,14 @@ const GlobalStyle = createGlobalStyle`
   a {
     text-decoration: none;
     color: inherit;
+  }
+
+  input {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    box-shadow: none;
+    border: none;
   }
 `;
 
