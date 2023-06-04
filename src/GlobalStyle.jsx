@@ -40,6 +40,8 @@ const GlobalStyle = createGlobalStyle`
   button {
     border: none;
     background-color: inherit;
+    padding: 0;
+    cursor: pointer;
   }
 
   a {
@@ -53,7 +55,15 @@ const GlobalStyle = createGlobalStyle`
     appearance: none;
     box-shadow: none;
     border: none;
+    padding: 0;
+    box-sizing: border-box;
   }
+
+  input[type="number"]::-webkit-outer-spin-button,
+  input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
 `;
 
 export default GlobalStyle;

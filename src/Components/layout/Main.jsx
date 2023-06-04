@@ -77,7 +77,6 @@ const FilterStyle = styled.div`
   justify-content: space-between;
 
   button {
-    cursor: pointer;
     font-size: 18px;
   }
 
@@ -121,7 +120,6 @@ const PageNumsWrap = styled.div`
 `;
 
 const PageNums = styled.button`
-  cursor: pointer;
   border: none;
   background: transparent;
   font-size: 18px;

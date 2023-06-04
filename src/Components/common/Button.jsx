@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 const Button = (props) => {
   const { type } = props;
@@ -12,10 +12,20 @@ const Button = (props) => {
 
 const BtnStyle = styled.button`
   display: block;
-  color: white;
-  background: var(--primary);
+  width: 100%;
   padding: 20px;
-  cursor: pointer;
+  color: white;
+  background: ${(props) => props.bgColor || 'var(--primary)'};
+  font-size: 18px;
+  font-weight: 700;
+  border-radius: 5px;
+
+  // 다른방식
+  /* ${(props) =>
+    props.special &&
+    css`
+      background-color: var(--gray);
+    `}; */
 `;
 
 export default Button;
