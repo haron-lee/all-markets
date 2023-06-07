@@ -1,12 +1,26 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import plus from '../../assets/icons/icon-plus-line.svg';
 import minus from '../../assets/icons/icon-minus-line.svg';
 
-const ProductCount = ({ count, setCount }) => {
+const ProductCount = ({
+  count,
+  setCount,
+  handleInput,
+  stock,
+  setErrorMessage,
+}) => {
+  const [inStock, setInStock] = useState(stock > 0);
+
   const increaseCount = () => {
-    if (count === 10) return;
-    setCount(count + 1);
+    if (count === stock) return;
+    if (stock <= 0) {
+      setErrorMessage('남은 재고가 없습니다');
+      setCount(0);
+    } else {
+      setCount(count + 1);
+      setErrorMessage('');
+    }
   };
 
   const decreaseCount = () => {
@@ -14,11 +28,19 @@ const ProductCount = ({ count, setCount }) => {
     setCount(count - 1);
   };
 
+  console.log(stock);
+
   return (
     <CountStyle>
-      <button type="button" onClick={decreaseCount}></button>
-      <input type="number" value={count} readOnly />
-      <button type="button" onClick={increaseCount}></button>
+      {inStock ? (
+        <>
+          <button type="button" onClick={decreaseCount}></button>
+          <input type="number" value={count} onChange={handleInput} />
+          <button type="button" onClick={increaseCount}></button>
+        </>
+      ) : (
+        <SoldOutMessage>해당 상품은 품절입니다.</SoldOutMessage>
+      )}
     </CountStyle>
   );
 };
@@ -49,6 +71,12 @@ const CountStyle = styled.div`
     border-bottom-right-radius: 5px;
     background: url(${plus}) center center no-repeat;
   }
+`;
+
+const SoldOutMessage = styled.span`
+  font-size: 24px;
+  font-weight: 700;
+  padding: 30px 0;
 `;
 
 export default ProductCount;

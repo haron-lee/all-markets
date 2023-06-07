@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Nav from '../Components/common/Nav';
 import Footer from '../Components/layout/Footer';
 import { useLocation } from 'react-router-dom';
@@ -10,10 +10,45 @@ const ProductDetail = () => {
   const location = useLocation();
   const product = location.state?.product;
   const [count, setCount] = useState(1);
+  const [errorMessage, setErrorMessage] = useState('');
+  const [shipping, setShipping] = useState('');
+
+  const handleShipping = () => {
+    if (product.shipping_fee > 0) {
+      setShipping(`택배배송 / ${product.shipping_fee.toLocaleString()}원`);
+    } else {
+      setShipping(`택배배송 / 무료배송`);
+    }
+  };
+
+  useEffect(() => {
+    handleShipping();
+  }, []);
+
+  console.log(shipping);
+  console.log(location);
+  console.log(product);
 
   if (!product) {
     return <h1>상품이 없습니다.</h1>;
   }
+
+  // input 내부를 클릭 햇을 때 아예 비워버려고 괜찮을 것 같음
+  const handleInput = (e) => {
+    let value = Number(e.target.value);
+
+    if (value <= 0) {
+      // setTimeout으로 2초쯤!
+      setErrorMessage('수량을 1이상으로 작성해주세요.');
+      // input value를 바꾸고싶은뎅...
+      setCount(1);
+    } else if (value > product.stock) {
+      setErrorMessage('남은 재고보다 많이 선택하셨습니다.');
+    } else {
+      setErrorMessage('');
+    }
+    setCount(value);
+  };
 
   return (
     <>
@@ -35,23 +70,48 @@ const ProductDetail = () => {
           </DetailTitle>
           <div>
             <DetailInfo>
-              <InfoPStyle fontSize="16px">택배배송 / 무료배송</InfoPStyle>
-              <ProductCount count={count} setCount={setCount} />
+              <InfoPStyle fontSize="16px">{shipping}</InfoPStyle>
+              <ProductCount
+                count={count}
+                setCount={setCount}
+                handleInput={handleInput}
+                stock={product.stock}
+                setErrorMessage={setErrorMessage}
+              />
+              {errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
             </DetailInfo>
             <ProductPrice>
-              <span>총 상품 금액</span>
-              <div>
-                <span>
-                  총 수량 <strong>{count}</strong>개
-                </span>
-                <span>
-                  <strong>{(product.price * count).toLocaleString()}</strong>원
-                </span>
-              </div>
+              {product.stock > 0 && (
+                <>
+                  <span>총 상품 금액</span>
+                  <div>
+                    <span>
+                      총 수량 <strong>{count}</strong>개
+                    </span>
+                    <span>
+                      <strong>
+                        {(product.price * count).toLocaleString()}
+                      </strong>
+                      원
+                    </span>
+                  </div>
+                </>
+              )}
             </ProductPrice>
             <BtnContainer>
-              <Button>바로 구매</Button>
-              <Button bgColor="var(--gray)">장바구니</Button>
+              <Button
+                disabled={product.stock <= 0}
+                noCursor={product.stock <= 0}
+              >
+                바로 구매
+              </Button>
+              <Button
+                bgColor="var(--gray)"
+                disabled={product.stock <= 0}
+                noCursor={product.stock <= 0}
+              >
+                장바구니
+              </Button>
             </BtnContainer>
           </div>
         </DetailWrap>
@@ -181,6 +241,13 @@ const BtnContainer = styled.div`
   button:last-child {
     flex-basis: 45%;
   }
+`;
+
+const ErrorMessage = styled.span`
+  display: inline-block;
+  color: red;
+  padding-top: 30px;
+  font-size: 20px;
 `;
 
 export default ProductDetail;

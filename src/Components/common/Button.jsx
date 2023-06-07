@@ -20,12 +20,17 @@ const BtnStyle = styled.button`
   font-weight: 700;
   border-radius: 5px;
 
-  // 다른방식
-  /* ${(props) =>
-    props.special &&
+  ${(props) =>
+    props.disabled &&
     css`
-      background-color: var(--gray);
-    `}; */
+      background-color: var(--border);
+    `};
+
+  ${(props) =>
+    props.noCursor &&
+    css`
+      cursor: default;
+    `}
 `;
 
 export default Button;
