@@ -1,31 +1,23 @@
-import React, { useState } from 'react';
-import styled, { css } from 'styled-components';
-import left from '../../assets/icons/icon-swiper-1.svg';
-import right from '../../assets/icons/icon-swiper-2.svg';
-import img1 from '../../assets/slide/1.jpeg';
-import img2 from '../../assets/slide/2.jpeg';
-import img3 from '../../assets/slide/3.png';
-import img4 from '../../assets/slide/4.jpeg';
-
-// 슬라이드 동그라미, 이미지 수만큼 생성되어야함
+import React, { useState } from "react";
+import styled, { css } from "styled-components";
+import left from "../../assets/icons/left-arrow.svg";
+import right from "../../assets/icons/right-arrow.svg";
+import img1 from "../../assets/images/bgimg.001.jpeg";
+import img2 from "../../assets/images/bgimg.002.jpeg";
+import img3 from "../../assets/images/bgimg.003.jpeg";
+import img4 from "../../assets/images/bgimg.004.jpeg";
+import img5 from "../../assets/images/bgimg.005.jpeg";
 
 const Slide = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const images = [img1, img2, img3, img4];
+  const images = [img1, img2, img3, img4, img5];
 
-  // for (let i = 0; i < images.length; i++) {
-  //   const div = document.createElement('div');
-  //   const span = document.createElement('span');
-  // }
-
-  // 두번째면 두번째의 인덱스 div에다가 classList add해서 컬러값만 바꾸게! querySelectorAll로 불러오는 것은!
   const handlePrevious = () => {
     setCurrentIndex((prevIndex) =>
       prevIndex === 0 ? images.length - 1 : prevIndex - 1
     );
   };
 
-  // 두번째면 두번째의 인덱스 div에다가 classList add해서 컬러값만 바꾸게! querySelectorAll로 불러오는 것은!
   const handleNext = () => {
     setCurrentIndex((prevIndex) =>
       prevIndex === images.length - 1 ? 0 : prevIndex + 1
@@ -35,16 +27,21 @@ const Slide = () => {
   return (
     <div>
       <SlideWrapStyle>
-        <SlideLeftBtn
-          $left
-          type="button"
-          onClick={handlePrevious}
-        ></SlideLeftBtn>
+        <SlideLeftBtn type="button" onClick={handlePrevious}></SlideLeftBtn>
         <SlideImgWrap>
           <img src={images[currentIndex]} alt="Slideshow" />
         </SlideImgWrap>
         <SlideRightBtn type="button" onClick={handleNext}></SlideRightBtn>
-        <div></div>
+        <IndicatorContainer>
+          {images.map((_, index) => {
+            return (
+              <Indicator
+                key={index}
+                bgColor={index === currentIndex}
+              ></Indicator>
+            );
+          })}
+        </IndicatorContainer>
       </SlideWrapStyle>
     </div>
   );
@@ -58,12 +55,12 @@ const SlideWrapStyle = styled.article`
 
 // 이미지 덮는애
 const SlideImgWrap = styled.div`
-  max-width: 1280px;
-  max-height: 500px;
+  /* max-width: 1280px; */
+  width: 100%;
+  height: 500px;
   margin: 0 auto;
 
   img {
-    aspect-ratio: 1280/500;
     object-fit: cover;
     width: 100%;
     height: 100%;
@@ -78,9 +75,9 @@ const sharedButtonStyles = css`
   top: 50%;
   transform: translateY(-50%);
   border: none;
-  border-radius: 20px;
+  border-radius: 50%;
   padding: 20px;
-  background: no-repeat center center/cover;
+  background: rgba(255, 255, 255, 0.2) no-repeat center center/ 15px;
   cursor: pointer;
 `;
 
@@ -94,6 +91,23 @@ const SlideRightBtn = styled.button`
   ${sharedButtonStyles}
   right: 100px;
   background-image: url(${right});
+`;
+
+const IndicatorContainer = styled.div`
+  margin-top: -30px;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 100px;
+  display: flex;
+  gap: 10px;
+`;
+
+const Indicator = styled.div`
+  width: 12px;
+  height: 12px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background-color: ${(props) => (props.bgColor ? "#727272" : "#ffffff")};
 `;
 
 export default Slide;
