@@ -1,6 +1,6 @@
 import { React, useState, useEffect, useRef } from 'react';
 import getProducts from '../../api/products';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import ProductItem from '../ProductItems/ProductItem';
 
 // TODO alt값 넣기
@@ -16,7 +16,6 @@ const Main = () => {
       let productPageNum = Math.ceil(res.count / 15);
       setPageNum(productPageNum);
     });
-    // getData(1);
   }, [productPageNum]);
 
   console.log(products);
@@ -28,15 +27,15 @@ const Main = () => {
 
   // pagination 번호
   const renderPages = () => {
-    const pages = [];
-    for (let i = 1; i <= pageNum; i++) {
-      pages.push(
-        <PageNums key={i} onClick={() => handlePageClick(i)}>
-          {i}
-        </PageNums>
-      );
-    }
-    return pages;
+    return Array.from({ length: pageNum }, (_, index) => (
+      <PageNums
+        key={index + 1}
+        onClick={() => handlePageClick(index + 1)}
+        activePage={index + 1 === productPageNum}
+      >
+        {index + 1}
+      </PageNums>
+    ));
   };
 
   useEffect(() => {
@@ -45,12 +44,12 @@ const Main = () => {
 
   return (
     <MainStyle>
-      <h2 className="a11y-hidden">판매 상품 목록</h2>
+      <h2 className='a11y-hidden'>판매 상품 목록</h2>
       <FilterStyle>
-        <button type="button" disabled>
+        <button type='button' disabled>
           최신등록순
         </button>
-        <button type="button" disabled>
+        <button type='button' disabled>
           인기도순
         </button>
       </FilterStyle>
@@ -120,9 +119,18 @@ const PageNumsWrap = styled.div`
 `;
 
 const PageNums = styled.button`
+  padding: 3px 8px;
   border: none;
+  border-radius: 3px;
   background: transparent;
   font-size: 18px;
+
+  ${(props) =>
+    props.activePage &&
+    css`
+      color: #fff;
+      background-color: var(--primary);
+    `}
 `;
 
 export default Main;
