@@ -4,19 +4,22 @@ import Form from '../common/Form';
 import LoginInput from '../common/LoginInput';
 import Button from '../common/Button';
 import loginAPI from '../../api/LoginAPI';
+import styled from 'styled-components';
 
-const LoginForm = () => {
+const LoginForm = ({ loginType }) => {
   const navigate = useNavigate();
   const [userInput, setUserInput] = useState({
     username: '',
     password: '',
-    login_type: 'BUYER',
+    login_type: loginType,
   });
   const [errorMessage, setErrorMessage] = useState('');
+  const [userErrorMessage, setUserErrorMessage] = useState('');
   const [userCheck, setUserCheck] = useState(false);
 
   const handleTarget = (e) => {
     const { name, value } = e.target;
+
     setUserInput((prevState) => ({
       ...prevState,
       [name]: value.trim(),
@@ -40,35 +43,58 @@ const LoginForm = () => {
     const loginSuccess = await handleLogin();
     if (loginSuccess) {
       setUserCheck(true);
-      navigate('/', { state: { userCheck } });
+      // TODO: 뒤로가기 막기
+      navigate('/', { state: { userCheck } }, { replace: true });
+    }
+  };
+
+  const handleError = () => {
+    if (userInput.username === '' && userInput.password === '') {
+      setUserErrorMessage('아이디를 입력해 주세요.');
+    } else if (userInput.username && userInput.password === '') {
+      setUserErrorMessage('비밀번호를 입력해 주세요.');
+    } else {
+      setUserErrorMessage('');
     }
   };
 
   return (
     <Form onSubmit={handleSubmit}>
-      <label htmlFor="login-id" className="a11y-hidden"></label>
       <LoginInput
-        type="text"
-        placeholder="아이디"
-        id="login-id"
-        name="username"
+        type='text'
+        placeholder='아이디'
+        name='username'
         value={userInput.username}
         onChange={handleTarget}
       />
-      <label htmlFor="login-pw" className="a11y-hidden"></label>
+      {userErrorMessage && userInput.username === '' && (
+        <ErrorStyle>{userErrorMessage}</ErrorStyle>
+      )}
       <LoginInput
-        type="password"
-        placeholder="비밀번호"
-        id="login-pw"
-        name="password"
+        type='password'
+        placeholder='비밀번호'
+        name='password'
         value={userInput.password}
         onChange={handleTarget}
-        autoComplete="on"
+        autoComplete='on'
       />
-      {errorMessage && <p>{errorMessage}</p>}
-      <Button type="submit">로그인</Button>
+      {userErrorMessage && userInput.username && userInput.password === '' && (
+        <ErrorStyle>{userErrorMessage}</ErrorStyle>
+      )}
+      {errorMessage && userInput.username && userInput.password && (
+        <ErrorStyle>{errorMessage}</ErrorStyle>
+      )}
+      <Button type='submit' mt='36px' onClick={handleError}>
+        로그인
+      </Button>
     </Form>
   );
 };
+
+const ErrorStyle = styled.p`
+  text-align: start;
+  margin-top: 10px;
+  color: var(--error);
+`;
 
 export default LoginForm;
