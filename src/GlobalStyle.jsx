@@ -1,5 +1,5 @@
-const { createGlobalStyle } = require("styled-components");
-const { default: reset } = require("styled-reset");
+const { createGlobalStyle } = require('styled-components');
+const { default: reset } = require('styled-reset');
 
 const GlobalStyle = createGlobalStyle`
   /* Font */
@@ -19,6 +19,7 @@ const GlobalStyle = createGlobalStyle`
     --gray: #767676;
     --footer-bg: #f2f2f2;
     --border: #c4c4c4;
+    --error: #EB5757;
 
     /* html */
     height: 100vh;

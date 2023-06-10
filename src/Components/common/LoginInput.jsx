@@ -9,6 +9,10 @@ const LoginInput = (props) => {
 const InputStyle = styled.input`
   padding: 20px 10px;
   border-bottom: 1px solid var(--border);
+
+  &::placeholder {
+    font-size: 16px;
+  }
 `;
 
 export default LoginInput;
