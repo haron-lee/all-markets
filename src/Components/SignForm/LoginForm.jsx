@@ -6,20 +6,15 @@ import Button from '../common/Button';
 import loginAPI from '../../api/LoginAPI';
 import styled from 'styled-components';
 
-const LoginForm = ({ loginType }) => {
+const LoginForm = ({ userInput, setUserInput }) => {
   const navigate = useNavigate();
-  const [userInput, setUserInput] = useState({
-    username: '',
-    password: '',
-    login_type: loginType,
-  });
+
   const [errorMessage, setErrorMessage] = useState('');
   const [userErrorMessage, setUserErrorMessage] = useState('');
   const [userCheck, setUserCheck] = useState(false);
 
   const handleTarget = (e) => {
     const { name, value } = e.target;
-
     setUserInput((prevState) => ({
       ...prevState,
       [name]: value.trim(),
@@ -30,6 +25,8 @@ const LoginForm = ({ loginType }) => {
     try {
       const accountData = await loginAPI(userInput);
       console.log(accountData);
+      const receivedToken = accountData.token;
+      localStorage.setItem('token', receivedToken);
       return true;
     } catch (error) {
       console.error('Account API 에러가 발생했습니다', error);
@@ -44,7 +41,7 @@ const LoginForm = ({ loginType }) => {
     if (loginSuccess) {
       setUserCheck(true);
       // TODO: 뒤로가기 막기
-      navigate('/', { state: { userCheck } }, { replace: true });
+      navigate('/', { state: { userCheck: true, type: userInput.login_type } });
     }
   };
 

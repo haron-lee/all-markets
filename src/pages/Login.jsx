@@ -7,17 +7,29 @@ import UserButton from '../Components/common/UserButton';
 
 const Login = () => {
   const [loginType, setLoginType] = useState('BUYER');
+  const [userInput, setUserInput] = useState({
+    username: '',
+    password: '',
+    login_type: loginType,
+  });
 
   const handleLoginType = (e) => {
     const target = e.target.textContent;
     if (target === '구매회원 로그인') {
       setLoginType('BUYER');
-    } else {
+      setUserInput({
+        ...userInput,
+        login_type: 'BUYER',
+      });
+    } else if (target === '판매회원 로그인') {
+      console.log(target);
       setLoginType('SELLER');
+      setUserInput({
+        ...userInput,
+        login_type: 'SELLER',
+      });
     }
   };
-
-  console.log(loginType);
 
   return (
     <div>
@@ -30,7 +42,6 @@ const Login = () => {
         <UserButtonStyle>
           <li>
             <UserButton
-              loginType={loginType}
               bgColor={loginType === 'BUYER'}
               onClick={handleLoginType}
               borderRight={loginType === 'BUYER'}
@@ -41,7 +52,6 @@ const Login = () => {
           </li>
           <li>
             <UserButton
-              loginType={loginType}
               bgColor={loginType === 'SELLER'}
               onClick={handleLoginType}
               borderLeft={loginType === 'SELLER'}
@@ -53,7 +63,11 @@ const Login = () => {
         </UserButtonStyle>
         <LoginStyle>
           <h2 className='a11y-hidden'>로그인</h2>
-          <LoginForm loginType={loginType} />
+          <LoginForm
+            loginType={loginType}
+            userInput={userInput}
+            setUserInput={setUserInput}
+          />
         </LoginStyle>
         <div>
           <LinkStyle to='/signup'>회원가입</LinkStyle>

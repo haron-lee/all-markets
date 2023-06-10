@@ -15,6 +15,7 @@ const loginAPI = async (userInput) => {
     if (response.ok) {
       return accountData;
     } else {
+      console.log(userInput);
       throw new Error('아이디 혹은 비밀번호가 일치하지 않습니다.');
     }
   } catch (error) {
