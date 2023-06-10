@@ -13,7 +13,7 @@ const Button = (props) => {
 const BtnStyle = styled.button`
   display: block;
   width: 100%;
-  padding: 20px;
+  padding: ${(props) => (props.padding ? props.padding : '20px')};
   color: white;
   background: ${(props) => props.bgColor || 'var(--primary)'};
   font-size: 18px;
