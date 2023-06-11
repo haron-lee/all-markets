@@ -1,7 +1,8 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import Button from '../common/Button';
+import loginCheck from '../../Recoil/loginCheckContext/loginCheckAtom.js';
+import loginType from '../../Recoil/loginTypeContext/loginTypeAtom.js';
 import Logo from '../../assets/icons/Logo-hodu.png';
 import Search from '../../assets/icons/search.svg';
 import Cart from '../../assets/icons/icon-shopping-cart.svg';
@@ -9,10 +10,13 @@ import Cart2 from '../../assets/icons/icon-shopping-cart-2.svg';
 import User from '../../assets/icons/icon-user.svg';
 import User2 from '../../assets/icons/icon-user-2.svg';
 import Shopping from '../../assets/icons/icon-shopping-bag.svg';
+import { useRecoilValue } from 'recoil';
 
 //TODO
 // form submit 함수
-const Nav = ({ userCheck, type }) => {
+const Nav = () => {
+  const loginChecked = useRecoilValue(loginCheck);
+  const type = useRecoilValue(loginType);
   const [dropbox, setDropbox] = useState(false);
 
   const handleDropbox = () => {
@@ -35,21 +39,21 @@ const Nav = ({ userCheck, type }) => {
             </button>
           </form>
         </LogoWrap>
-        {userCheck && type === 'BUYER' && (
+        {loginChecked && type === 'BUYER' && (
           <LinkWrap>
             <LinkStyle to='/cart'>장바구니</LinkStyle>
             <MypageStyle onClick={handleDropbox}>마이페이지</MypageStyle>
             {dropbox && <Dropdown ml='47px' />}
           </LinkWrap>
         )}
-        {userCheck && type === 'SELLER' && (
+        {loginChecked && type === 'SELLER' && (
           <LinkWrap>
             <MypageStyle onClick={handleDropbox}>마이페이지</MypageStyle>
             <SellerBox to='/seller'>판매자 센터</SellerBox>
             {dropbox && <Dropdown ml='-38px' />}
           </LinkWrap>
         )}
-        {!userCheck && !type && (
+        {!loginChecked && (
           <LinkWrap>
             <LinkStyle to='/cart'>장바구니</LinkStyle>
             <LinkStyle2 to='/login'>로그인</LinkStyle2>

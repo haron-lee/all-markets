@@ -1,17 +1,19 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import loginCheck from '../../Recoil/loginCheckContext/loginCheckAtom.js';
 import Form from '../common/Form';
 import LoginInput from '../common/LoginInput';
 import Button from '../common/Button';
 import loginAPI from '../../api/LoginAPI';
 import styled from 'styled-components';
+import { useRecoilState } from 'recoil';
 
 const LoginForm = ({ userInput, setUserInput }) => {
   const navigate = useNavigate();
 
+  const [loginChecked, setLoginChecked] = useRecoilState(loginCheck);
   const [errorMessage, setErrorMessage] = useState('');
   const [userErrorMessage, setUserErrorMessage] = useState('');
-  const [userCheck, setUserCheck] = useState(false);
 
   const handleTarget = (e) => {
     const { name, value } = e.target;
@@ -27,6 +29,7 @@ const LoginForm = ({ userInput, setUserInput }) => {
       console.log(accountData);
       const receivedToken = accountData.token;
       localStorage.setItem('token', receivedToken);
+      setLoginChecked(true);
       return true;
     } catch (error) {
       console.error('Account API 에러가 발생했습니다', error);
@@ -39,11 +42,15 @@ const LoginForm = ({ userInput, setUserInput }) => {
     e.preventDefault();
     const loginSuccess = await handleLogin();
     if (loginSuccess) {
-      setUserCheck(true);
-      // TODO: 뒤로가기 막기
-      navigate('/', { state: { userCheck: true, type: userInput.login_type } });
+      navigate('/');
     }
   };
+
+  useEffect(() => {
+    if (loginChecked) {
+      navigate('/');
+    }
+  }, []);
 
   const handleError = () => {
     if (userInput.username === '' && userInput.password === '') {

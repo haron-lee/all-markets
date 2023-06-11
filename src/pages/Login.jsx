@@ -1,35 +1,38 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import loginType from '../Recoil/loginTypeContext/loginTypeAtom.js';
 import Logo from '../assets/icons/Logo-hodu.png';
 import LoginForm from '../Components/SignForm/LoginForm';
 import UserButton from '../Components/common/UserButton';
+import { useRecoilState } from 'recoil';
 
 const Login = () => {
-  const [loginType, setLoginType] = useState('BUYER');
+  const [type, setType] = useRecoilState(loginType);
   const [userInput, setUserInput] = useState({
     username: '',
     password: '',
-    login_type: loginType,
+    login_type: type,
   });
 
   const handleLoginType = (e) => {
     const target = e.target.textContent;
     if (target === '구매회원 로그인') {
-      setLoginType('BUYER');
+      setType('BUYER');
       setUserInput({
         ...userInput,
         login_type: 'BUYER',
       });
     } else if (target === '판매회원 로그인') {
-      console.log(target);
-      setLoginType('SELLER');
+      setType('SELLER');
       setUserInput({
         ...userInput,
         login_type: 'SELLER',
       });
     }
   };
+
+  console.log(type);
 
   return (
     <div>
@@ -42,20 +45,20 @@ const Login = () => {
         <UserButtonStyle>
           <li>
             <UserButton
-              bgColor={loginType === 'BUYER'}
+              bgColor={type === 'BUYER'}
               onClick={handleLoginType}
-              borderRight={loginType === 'BUYER'}
-              zIdx={loginType === 'BUYER'}
+              borderRight={type === 'BUYER'}
+              zIdx={type === 'BUYER'}
             >
               구매회원 로그인
             </UserButton>
           </li>
           <li>
             <UserButton
-              bgColor={loginType === 'SELLER'}
+              bgColor={type === 'SELLER'}
               onClick={handleLoginType}
-              borderLeft={loginType === 'SELLER'}
-              zIdx={loginType === 'SELLER'}
+              borderLeft={type === 'SELLER'}
+              zIdx={type === 'SELLER'}
             >
               판매회원 로그인
             </UserButton>
@@ -63,11 +66,7 @@ const Login = () => {
         </UserButtonStyle>
         <LoginStyle>
           <h2 className='a11y-hidden'>로그인</h2>
-          <LoginForm
-            loginType={loginType}
-            userInput={userInput}
-            setUserInput={setUserInput}
-          />
+          <LoginForm userInput={userInput} setUserInput={setUserInput} />
         </LoginStyle>
         <div>
           <LinkStyle to='/signup'>회원가입</LinkStyle>
