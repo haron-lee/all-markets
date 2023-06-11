@@ -1,8 +1,12 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import logoutAPI from '../../api/LogoutAPI';
 import loginCheck from '../../Recoil/loginCheckContext/loginCheckAtom.js';
 import loginType from '../../Recoil/loginTypeContext/loginTypeAtom.js';
+import Button from '../common/Button';
+// Image
 import Logo from '../../assets/icons/Logo-hodu.png';
 import Search from '../../assets/icons/search.svg';
 import Cart from '../../assets/icons/icon-shopping-cart.svg';
@@ -10,17 +14,38 @@ import Cart2 from '../../assets/icons/icon-shopping-cart-2.svg';
 import User from '../../assets/icons/icon-user.svg';
 import User2 from '../../assets/icons/icon-user-2.svg';
 import Shopping from '../../assets/icons/icon-shopping-bag.svg';
-import { useRecoilValue } from 'recoil';
 
-//TODO
-// form submit 함수
 const Nav = () => {
-  const loginChecked = useRecoilValue(loginCheck);
+  const [loginChecked, setLoginChecked] = useRecoilState(loginCheck);
   const type = useRecoilValue(loginType);
   const [dropbox, setDropbox] = useState(false);
+  const [logoutCheck, setLogoutCheck] = useState(false);
 
   const handleDropbox = () => {
     setDropbox(!dropbox);
+  };
+
+  const handleLogoutLayout = () => {
+    setLogoutCheck(true);
+  };
+
+  console.log(logoutCheck);
+
+  const handleLogout = async () => {
+    try {
+      const res = await logoutAPI();
+
+      if (res) {
+        setLoginChecked(false);
+        setLogoutCheck(false);
+        console.log(res.detail);
+        localStorage.clear();
+      } else {
+        throw new Error('로그아웃 기능에 에러가 있습니다.');
+      }
+    } catch (err) {
+      console.error('LogoutAPI 응답에 문제가 있습니다.', err);
+    }
   };
 
   return (
@@ -43,14 +68,18 @@ const Nav = () => {
           <LinkWrap>
             <LinkStyle to='/cart'>장바구니</LinkStyle>
             <MypageStyle onClick={handleDropbox}>마이페이지</MypageStyle>
-            {dropbox && <Dropdown ml='47px' />}
+            {dropbox && (
+              <Dropdown handleLogoutLayout={handleLogoutLayout} ml='30px' />
+            )}
           </LinkWrap>
         )}
         {loginChecked && type === 'SELLER' && (
           <LinkWrap>
             <MypageStyle onClick={handleDropbox}>마이페이지</MypageStyle>
             <SellerBox to='/seller'>판매자 센터</SellerBox>
-            {dropbox && <Dropdown ml='-38px' />}
+            {dropbox && (
+              <Dropdown handleLogoutLayout={handleLogoutLayout} ml='-38px' />
+            )}
           </LinkWrap>
         )}
         {!loginChecked && (
@@ -60,15 +89,36 @@ const Nav = () => {
           </LinkWrap>
         )}
       </NavStyle>
+      {logoutCheck && (
+        <LogoutLayout>
+          <div>
+            <p>정말 로그아웃 하시겠습니까?</p>
+            <Button onClick={handleLogout} width='130px' padding='15px'>
+              로그아웃
+            </Button>
+            <Button
+              onClick={() => setLogoutCheck(false)}
+              width='130px'
+              bgColor='#fff'
+              border='1px solid var(--border)'
+              color='var(--gray)'
+              padding='15px'
+            >
+              취소
+            </Button>
+          </div>
+        </LogoutLayout>
+      )}
     </NavWrap>
   );
 };
 
 const Dropdown = (props) => {
+  const { handleLogoutLayout } = props;
   return (
     <Dropbox {...props}>
       <button>마이페이지</button>
-      <button>로그아웃</button>
+      <button onClick={handleLogoutLayout}>로그아웃</button>
     </Dropbox>
   );
 };
@@ -237,6 +287,38 @@ const Dropbox = styled.div`
 
   button:first-child {
     margin-bottom: 5px;
+  }
+`;
+
+const LogoutLayout = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 99999;
+
+  div {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 40px 15px 30px;
+    width: 350px;
+    background-color: #fff;
+    text-align: center;
+    border-radius: 20px;
+
+    p {
+      font-size: 24px;
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    button:nth-of-type(1) {
+      margin-right: 15px;
+    }
   }
 `;
 

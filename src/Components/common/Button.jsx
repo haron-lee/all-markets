@@ -11,14 +11,15 @@ const Button = (props) => {
 };
 
 const BtnStyle = styled.button`
-  display: block;
-  width: 100%;
-  padding: ${(props) => (props.padding ? props.padding : '20px')};
-  color: white;
+  display: inline-block;
+  width: ${(props) => (props.width ? props.width : '100%')};
+  padding: ${(props) => props.padding || '20px'};
+  color: ${(props) => props.color || 'white'};
   background: ${(props) => props.bgColor || 'var(--primary)'};
   font-size: 18px;
   font-weight: 700;
   border-radius: 5px;
+  border: ${(props) => props.border || 'none'};
   margin-top: ${(props) => (props.mt ? props.mt : '0px')};
 
   ${(props) =>
