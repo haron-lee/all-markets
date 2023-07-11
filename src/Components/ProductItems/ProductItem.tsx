@@ -1,10 +1,28 @@
-import { React } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 
-// ToDo: 제목 및 내용 길경우 고려
+// TODO 제목 및 내용 길경우 고려
 
-const ProductItem = ({ products }) => {
+// interface Product {
+//   product_id: number;
+//   image: string;
+//   product_name: string;
+//   store_name: string;
+//   price: number;
+// }
+
+type ProductItemProps = {
+  products: Array<{
+    product_id: number;
+    image: string;
+    product_name: string;
+    store_name: string;
+    price: number;
+  }>;
+};
+
+const ProductItem = ({ products }: ProductItemProps) => {
   const navigate = useNavigate();
 
   return (
@@ -23,9 +41,9 @@ const ProductItem = ({ products }) => {
               <div>
                 <img src={item.image} alt={item.product_name} />
               </div>
-              <p className="desc">{item.store_name}</p>
-              <p className="title">{item.product_name}</p>
-              <p className="price">
+              <p className='desc'>{item.store_name}</p>
+              <p className='title'>{item.product_name}</p>
+              <p className='price'>
                 <strong>{item.price.toLocaleString()}</strong>원
               </p>
             </Card>

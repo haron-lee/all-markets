@@ -1,16 +1,28 @@
-import React from 'react';
+import React, { ReactNode, ButtonHTMLAttributes, CSSProperties } from 'react';
 import styled, { css } from 'styled-components';
 
-const Button = (props) => {
-  const { type } = props;
+type ButtonProps = React.HTMLAttributes<HTMLButtonElement> & {
+  children: ReactNode;
+  type?: 'button' | 'submit' | 'reset' | undefined;
+  width?: string;
+  padding?: string;
+  bgColor?: string;
+  border?: string;
+  mt?: string;
+  noCursor?: boolean;
+  disabled?: boolean;
+  style?: CSSProperties;
+};
+
+const Button = ({ type, children, ...rest }: ButtonProps) => {
   return (
-    <BtnStyle type={type ? type : 'button'} {...props}>
-      {props.children}
+    <BtnStyle {...rest} type={type ? type : 'button'}>
+      {children}
     </BtnStyle>
   );
 };
 
-const BtnStyle = styled.button`
+const BtnStyle = styled.button<ButtonProps>`
   display: inline-block;
   width: ${(props) => (props.width ? props.width : '100%')};
   padding: ${(props) => props.padding || '20px'};

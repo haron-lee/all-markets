@@ -3,9 +3,9 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import logoutAPI from '../../api/LogoutAPI';
-import loginCheck from '../../Recoil/loginCheckContext/loginCheckAtom.js';
-import loginType from '../../Recoil/loginTypeContext/loginTypeAtom.js';
-import Button from '../common/Button';
+import loginCheck from '../../Recoil/loginCheckContext/loginCheckAtom.ts';
+import loginType from '../../Recoil/loginTypeContext/loginTypeAtom.ts';
+import Button from './Button';
 // Image
 import Logo from '../../assets/icons/Logo-hodu.png';
 import Search from '../../assets/icons/search.svg';
@@ -113,7 +113,12 @@ const Nav = () => {
   );
 };
 
-const Dropdown = (props) => {
+type DropdownProps = {
+  handleLogoutLayout: () => void;
+  ml?: string;
+};
+
+const Dropdown = (props: DropdownProps) => {
   const { handleLogoutLayout } = props;
   return (
     <Dropbox {...props}>
@@ -256,7 +261,7 @@ const SellerBox = styled(Link)`
   }
 `;
 
-const Dropbox = styled.div`
+const Dropbox = styled.div<DropdownProps>`
   position: absolute;
   bottom: 0;
   margin-left: ${(props) => props.ml};

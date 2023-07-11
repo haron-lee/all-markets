@@ -1,7 +1,5 @@
-/* eslint-disable jsx-a11y/anchor-has-content */
 import React from 'react';
 import styled from 'styled-components';
-// import { Link } from 'react-router-dom';
 import facebook from '../../assets/icons/icon-fb.svg';
 import insta from '../../assets/icons/icon-insta.svg';
 import youtube from '../../assets/icons/icon-yt.svg';
@@ -16,36 +14,36 @@ const Footer = () => {
   return (
     <FooterWrap>
       <FooterStyle>
-        <h2 className="a11y-hidden">회사 정보 및 약관 정책</h2>
-        <div className="footer-menu">
-          <h3 className="a11y-hidden">약관 정책 정보</h3>
-          <ul className="menu-titles">
+        <h2 className='a11y-hidden'>회사 정보 및 약관 정책</h2>
+        <div className='footer-menu'>
+          <h3 className='a11y-hidden'>약관 정책 정보</h3>
+          <ul className='menu-titles'>
             <li>
-              <a href="#none">호두샵 소개</a>
+              <a href='#none'>호두샵 소개</a>
             </li>
             <li>
-              <a href="#none">이용약관</a>
+              <a href='#none'>이용약관</a>
             </li>
             <li>
-              <a href="#none">개인정보처리방침</a>
+              <a href='#none'>개인정보처리방침</a>
             </li>
             <li>
-              <a href="#none">전자금융거래약관</a>
+              <a href='#none'>전자금융거래약관</a>
             </li>
             <li>
-              <a href="#none">청소년보호정책</a>
+              <a href='#none'>청소년보호정책</a>
             </li>
             <li>
-              <a href="#none">제휴문의</a>
+              <a href='#none'>제휴문의</a>
             </li>
           </ul>
-          <div className="sns">
-            <a href={sns.instagram} target="_blank" rel="noreferrer"></a>
-            <a href={sns.facebook} target="_blank" rel="noreferrer"></a>
-            <a href={sns.youtube} target="_blank" rel="noreferrer"></a>
+          <div className='sns'>
+            <a href={sns.instagram} target='_blank' rel='noreferrer'></a>
+            <a href={sns.facebook} target='_blank' rel='noreferrer'></a>
+            <a href={sns.youtube} target='_blank' rel='noreferrer'></a>
           </div>
         </div>
-        <div className="corp-info">
+        <div className='corp-info'>
           <strong>(주)HODU SHOP</strong>
           <address>제주특별자치도 제주시 동광고 137 </address>
           <p>

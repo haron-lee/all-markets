@@ -1,7 +1,17 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import styled from 'styled-components';
 
-const UserButton = (props) => {
+type UserButtonProps = React.HTMLAttributes<HTMLButtonElement> & {
+  children: ReactNode;
+  type?: 'submit' | 'button' | 'reset' | undefined;
+  borderBottom?: string;
+  borderRight?: boolean;
+  borderLeft?: boolean;
+  bgColor?: boolean;
+  zIdx?: boolean;
+};
+
+const UserButton = (props: UserButtonProps) => {
   const { type } = props;
   return (
     <UserButtonStyle type={type ? type : 'button'} {...props}>
@@ -10,7 +20,7 @@ const UserButton = (props) => {
   );
 };
 
-const UserButtonStyle = styled.button`
+const UserButtonStyle = styled.button<UserButtonProps>`
   display: block;
   width: 275px;
   padding: 20px 0 24px 0;

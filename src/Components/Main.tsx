@@ -1,4 +1,9 @@
-import { React, useState, useEffect, useRef } from 'react';
+import React, {
+  useState,
+  useEffect,
+  useRef,
+  ButtonHTMLAttributes,
+} from 'react';
 import getProducts from '../api/products';
 import styled, { css } from 'styled-components';
 import ProductItem from './ProductItems/ProductItem';
@@ -8,21 +13,23 @@ const Main = () => {
   const [products, setProducts] = useState([]);
   const [productPageNum, setProductPageNum] = useState(1);
   const [pageNum, setPageNum] = useState(1);
-  const listRef = useRef(null);
+  const listRef = useRef() as React.MutableRefObject<HTMLUListElement>;
 
   useEffect(() => {
     getProducts(productPageNum).then((res) => {
       setProducts(res.results);
-      let productPageNum = Math.ceil(res.count / 15);
+      const productPageNum = Math.ceil(res.count / 15);
       setPageNum(productPageNum);
     });
   }, [productPageNum]);
 
   console.log(products);
 
-  const handlePageClick = (page) => {
+  const handlePageClick = (page: number) => {
     setProductPageNum(page);
-    listRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    if (listRef.current !== null) {
+      listRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
   };
 
   // pagination 번호
@@ -118,7 +125,12 @@ const PageNumsWrap = styled.div`
   }
 `;
 
-const PageNums = styled.button`
+//
+type PageNumsProps = {
+  activePage?: boolean;
+} & ButtonHTMLAttributes<HTMLButtonElement>;
+
+const PageNums = styled.button<PageNumsProps>`
   padding: 3px 8px;
   border: none;
   border-radius: 3px;

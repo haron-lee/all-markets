@@ -1,7 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, ChangeEvent } from 'react';
 import styled from 'styled-components';
 import plus from '../../assets/icons/icon-plus-line.svg';
 import minus from '../../assets/icons/icon-minus-line.svg';
+
+type ProductCountProps = {
+  count: number;
+  setCount: React.Dispatch<React.SetStateAction<number>>;
+  handleInput: (event: ChangeEvent<HTMLInputElement>) => void;
+  stock: number;
+  setErrorMessage: React.Dispatch<React.SetStateAction<string>>;
+};
 
 const ProductCount = ({
   count,
@@ -9,7 +17,7 @@ const ProductCount = ({
   handleInput,
   stock,
   setErrorMessage,
-}) => {
+}: ProductCountProps) => {
   const [inStock, setInStock] = useState(stock > 0);
 
   const increaseCount = () => {
@@ -34,9 +42,9 @@ const ProductCount = ({
     <CountStyle>
       {inStock ? (
         <>
-          <button type="button" onClick={decreaseCount}></button>
-          <input type="number" value={count} onChange={handleInput} />
-          <button type="button" onClick={increaseCount}></button>
+          <button type='button' onClick={decreaseCount}></button>
+          <input type='number' value={count} onChange={handleInput} />
+          <button type='button' onClick={increaseCount}></button>
         </>
       ) : (
         <SoldOutMessage>해당 상품은 품절입니다.</SoldOutMessage>

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { ChangeEvent, useEffect, useState } from 'react';
 import Nav from '../Components/common/Nav';
 import Footer from '../Components/layout/Footer';
 import { useLocation } from 'react-router-dom';
@@ -34,8 +34,8 @@ const ProductDetail = () => {
   }
 
   // input 내부를 클릭 햇을 때 아예 비워버려고 괜찮을 것 같음
-  const handleInput = (e) => {
-    let value = Number(e.target.value);
+  const handleInput = (e: ChangeEvent<HTMLInputElement>) => {
+    const value = Number(e.target.value);
 
     if (value <= 0) {
       // setTimeout으로 2초쯤!
@@ -56,7 +56,7 @@ const ProductDetail = () => {
         <Nav />
       </header>
       <DetailContainer>
-        <h1 className="a11y-hidden">상품 상세페이지</h1>
+        <h1 className='a11y-hidden'>상품 상세페이지</h1>
         <ImgContainer>
           <img src={product.image} alt={product.product_name} />
         </ImgContainer>
@@ -70,7 +70,7 @@ const ProductDetail = () => {
           </DetailTitle>
           <div>
             <DetailInfo>
-              <InfoPStyle fontSize="16px">{shipping}</InfoPStyle>
+              <InfoPStyle fontSize='16px'>{shipping}</InfoPStyle>
               <ProductCount
                 count={count}
                 setCount={setCount}
@@ -106,7 +106,7 @@ const ProductDetail = () => {
                 바로 구매
               </Button>
               <Button
-                bgColor="var(--gray)"
+                bgColor='var(--gray)'
                 disabled={product.stock <= 0}
                 noCursor={product.stock <= 0}
               >
@@ -121,8 +121,12 @@ const ProductDetail = () => {
   );
 };
 
+type InfoPStyle = {
+  fontSize?: string;
+};
+
 // p 재사용 스타일컴포넌트
-const InfoPStyle = styled.p`
+const InfoPStyle = styled.p<InfoPStyle>`
   font-size: ${(props) => (props.fontSize ? props.fontSize : '18px')};
   color: var(--gray);
 

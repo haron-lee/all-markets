@@ -1,12 +1,12 @@
-import React, { useState } from "react";
-import styled, { css } from "styled-components";
-import left from "../../assets/icons/left-arrow.svg";
-import right from "../../assets/icons/right-arrow.svg";
-import img1 from "../../assets/images/bgimg.001.jpeg";
-import img2 from "../../assets/images/bgimg.002.jpeg";
-import img3 from "../../assets/images/bgimg.003.jpeg";
-import img4 from "../../assets/images/bgimg.004.jpeg";
-import img5 from "../../assets/images/bgimg.005.jpeg";
+import React, { useState } from 'react';
+import styled, { css } from 'styled-components';
+import left from '../../assets/icons/left-arrow.svg';
+import right from '../../assets/icons/right-arrow.svg';
+import img1 from '../../assets/images/bgimg.001.jpeg';
+import img2 from '../../assets/images/bgimg.002.jpeg';
+import img3 from '../../assets/images/bgimg.003.jpeg';
+import img4 from '../../assets/images/bgimg.004.jpeg';
+import img5 from '../../assets/images/bgimg.005.jpeg';
 
 const Slide = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -27,11 +27,11 @@ const Slide = () => {
   return (
     <div>
       <SlideWrapStyle>
-        <SlideLeftBtn type="button" onClick={handlePrevious}></SlideLeftBtn>
+        <SlideLeftBtn type='button' onClick={handlePrevious}></SlideLeftBtn>
         <SlideImgWrap>
-          <img src={images[currentIndex]} alt="Slideshow" />
+          <img src={images[currentIndex]} alt='Slideshow' />
         </SlideImgWrap>
-        <SlideRightBtn type="button" onClick={handleNext}></SlideRightBtn>
+        <SlideRightBtn type='button' onClick={handleNext}></SlideRightBtn>
         <IndicatorContainer>
           {images.map((_, index) => {
             return (
@@ -102,12 +102,16 @@ const IndicatorContainer = styled.div`
   gap: 10px;
 `;
 
-const Indicator = styled.div`
+type Indicator = {
+  bgColor?: boolean;
+};
+
+const Indicator = styled.div<Indicator>`
   width: 12px;
   height: 12px;
   flex-shrink: 0;
   border-radius: 50%;
-  background-color: ${(props) => (props.bgColor ? "#727272" : "#ffffff")};
+  background-color: ${(props) => (props.bgColor ? '#727272' : '#ffffff')};
 `;
 
 export default Slide;

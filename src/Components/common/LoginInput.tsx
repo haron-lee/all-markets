@@ -1,7 +1,14 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const LoginInput = (props) => {
+type LoginInputProps = React.HTMLAttributes<HTMLInputElement> & {
+  type?: 'button' | 'submit' | 'reset' | 'text' | 'password' | undefined;
+  name?: string;
+  value?: string;
+  autoComplete?: string;
+};
+
+const LoginInput = (props: LoginInputProps) => {
   const { type } = props;
   return <InputStyle type={type ? type : 'text'} {...props} />;
 };
