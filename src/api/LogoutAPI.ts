@@ -7,7 +7,6 @@ const logoutAPI = async () => {
     const logoutData = await response.json();
 
     if (response.ok) {
-      console.log(response.detail);
       return logoutData;
     } else {
       throw new Error('로그아웃 기능에 에러가 있습니다.');

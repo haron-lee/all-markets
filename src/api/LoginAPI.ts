@@ -1,6 +1,12 @@
 const ACCOUNT_URL = 'https://openmarket.weniv.co.kr/accounts/login/';
 
-const loginAPI = async (userInput) => {
+const loginAPI = async (userInput: {
+  userInput: {
+    username: string;
+    password: string;
+    login_type: string;
+  };
+}) => {
   try {
     const response = await fetch(ACCOUNT_URL, {
       method: 'POST',

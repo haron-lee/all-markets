@@ -1,6 +1,6 @@
 const PRODUCT_URL = 'https://openmarket.weniv.co.kr/products';
 
-const getProducts = async (page) => {
+const getProducts = async (page: number) => {
   try {
     const data = await fetch(`${PRODUCT_URL}?page=${page}`);
     if (!data.ok) {

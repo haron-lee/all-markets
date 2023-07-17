@@ -1,7 +1,7 @@
 import React, { ChangeEvent, MouseEventHandler, useState } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import loginType from '../Recoil/loginTypeContext/loginTypeAtom.ts';
+import loginType from '../Recoil/loginTypeContext/loginTypeAtom';
 import Logo from '../assets/icons/Logo-hodu.png';
 import LoginForm from '../Components/SignForm/LoginForm';
 import UserButton from '../Components/common/UserButton';
@@ -49,20 +49,20 @@ const Login = () => {
         <UserButtonStyle>
           <li>
             <UserButton
-              bgColor={type === 'BUYER'}
+              $bgColor={type === 'BUYER'}
               onClick={handleLoginType}
-              borderRight={type === 'BUYER'}
-              zIdx={type === 'BUYER'}
+              $borderRight={type === 'BUYER'}
+              $zIdx={type === 'BUYER'}
             >
               구매회원 로그인
             </UserButton>
           </li>
           <li>
             <UserButton
-              bgColor={type === 'SELLER'}
+              $bgColor={type === 'SELLER'}
               onClick={handleLoginType}
-              borderLeft={type === 'SELLER'}
-              zIdx={type === 'SELLER'}
+              $borderLeft={type === 'SELLER'}
+              $zIdx={type === 'SELLER'}
             >
               판매회원 로그인
             </UserButton>

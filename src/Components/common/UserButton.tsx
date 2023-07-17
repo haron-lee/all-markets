@@ -5,10 +5,10 @@ type UserButtonProps = React.HTMLAttributes<HTMLButtonElement> & {
   children: ReactNode;
   type?: 'submit' | 'button' | 'reset' | undefined;
   borderBottom?: string;
-  borderRight?: boolean;
-  borderLeft?: boolean;
-  bgColor?: boolean;
-  zIdx?: boolean;
+  $borderRight?: boolean;
+  $borderLeft?: boolean;
+  $bgColor?: boolean;
+  $zIdx?: boolean;
 };
 
 const UserButton = (props: UserButtonProps) => {
@@ -33,11 +33,11 @@ const UserButtonStyle = styled.button<UserButtonProps>`
   border-bottom: ${(props) =>
     props.borderBottom ? props.borderBottom : 'none'};
   border-right: ${(props) =>
-    props.borderRight ? 'none' : '1px solid var(--border)'};
+    props.$borderRight ? 'none' : '1px solid var(--border)'};
   border-left: ${(props) =>
-    props.borderLeft ? 'none' : '1px solid var(--border)'};
-  background-color: ${(props) => (props.bgColor ? 'white' : '#f2f2f2')};
-  z-index: ${(props) => (props.zIdx ? 9999 : 'auto')};
+    props.$borderLeft ? 'none' : '1px solid var(--border)'};
+  background-color: ${(props) => (props.$bgColor ? 'white' : '#f2f2f2')};
+  z-index: ${(props) => (props.$zIdx ? 9999 : 'auto')};
   position: relative;
 `;
 

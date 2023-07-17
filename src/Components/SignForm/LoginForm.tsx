@@ -1,12 +1,12 @@
 import React, { useEffect, useState, ChangeEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
+import { useRecoilState } from 'recoil';
 import loginCheck from '../../Recoil/loginCheckContext/loginCheckAtom.ts';
 import Form from '../common/Form';
 import LoginInput from '../common/LoginInput';
 import Button from '../common/Button';
-import loginAPI from '../../api/LoginAPI.jsx';
-import styled from 'styled-components';
-import { useRecoilState } from 'recoil';
+import loginAPI from '../../api/LoginAPI';
 
 // NOTE: interface와 type, 유니온 타입
 /*
@@ -56,7 +56,10 @@ const LoginForm = ({ userInput, setUserInput }: LoginForm) => {
 
   const handleLogin = async () => {
     try {
-      const accountData = await loginAPI(userInput);
+      const modifiedUserInput = {
+        userInput: userInput,
+      };
+      const accountData = await loginAPI(modifiedUserInput);
       console.log(accountData);
       const receivedToken = accountData.token;
       localStorage.setItem('token', receivedToken);
@@ -123,7 +126,7 @@ const LoginForm = ({ userInput, setUserInput }: LoginForm) => {
       {errorMessage && userInput.username && userInput.password && (
         <ErrorStyle>{errorMessage}</ErrorStyle>
       )}
-      <Button type='submit' mt='36px' onClick={handleError}>
+      <Button type='submit' $mt='36px' onClick={handleError}>
         로그인
       </Button>
     </Form>

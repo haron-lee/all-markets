@@ -21,12 +21,13 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react-jsx",
-    "allowImportingTsExtensions": true
+    "allowImportingTsExtensions": true,
+    "typeRoots": ["./node_modules/@types", "./src/types"]
   },
   "include": [
     //컴파일할 폴더 입력. src의 모든파일 확인함
     "src",
-    "src/@types/custom.d.ts"
+    "src/types"
   ],
   "exclude": ["node_modules"]
 }

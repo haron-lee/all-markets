@@ -6,9 +6,9 @@ type ButtonProps = React.HTMLAttributes<HTMLButtonElement> & {
   type?: 'button' | 'submit' | 'reset' | undefined;
   width?: string;
   padding?: string;
-  bgColor?: string;
+  $bgColor?: string;
   border?: string;
-  mt?: string;
+  $mt?: string;
   noCursor?: boolean;
   disabled?: boolean;
   style?: CSSProperties;
@@ -27,12 +27,12 @@ const BtnStyle = styled.button<ButtonProps>`
   width: ${(props) => (props.width ? props.width : '100%')};
   padding: ${(props) => props.padding || '20px'};
   color: ${(props) => props.color || 'white'};
-  background: ${(props) => props.bgColor || 'var(--primary)'};
+  background: ${(props) => props.$bgColor || 'var(--primary)'};
   font-size: 18px;
   font-weight: 700;
   border-radius: 5px;
   border: ${(props) => props.border || 'none'};
-  margin-top: ${(props) => (props.mt ? props.mt : '0px')};
+  margin-top: ${(props) => (props.$mt ? props.$mt : '0px')};
 
   ${(props) =>
     props.disabled &&

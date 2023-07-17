@@ -38,7 +38,7 @@ const Main = () => {
       <PageNums
         key={index + 1}
         onClick={() => handlePageClick(index + 1)}
-        activePage={index + 1 === productPageNum}
+        $activePage={index + 1 === productPageNum}
       >
         {index + 1}
       </PageNums>
@@ -127,7 +127,7 @@ const PageNumsWrap = styled.div`
 
 //
 type PageNumsProps = {
-  activePage?: boolean;
+  $activePage?: boolean;
 } & ButtonHTMLAttributes<HTMLButtonElement>;
 
 const PageNums = styled.button<PageNumsProps>`
@@ -138,7 +138,7 @@ const PageNums = styled.button<PageNumsProps>`
   font-size: 18px;
 
   ${(props) =>
-    props.activePage &&
+    props.$activePage &&
     css`
       color: #fff;
       background-color: var(--primary);

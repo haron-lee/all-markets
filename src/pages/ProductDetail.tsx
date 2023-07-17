@@ -106,7 +106,7 @@ const ProductDetail = () => {
                 바로 구매
               </Button>
               <Button
-                bgColor='var(--gray)'
+                $bgColor='var(--gray)'
                 disabled={product.stock <= 0}
                 noCursor={product.stock <= 0}
               >

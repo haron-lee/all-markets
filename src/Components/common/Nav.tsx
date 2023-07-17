@@ -99,7 +99,7 @@ const Nav = () => {
             <Button
               onClick={() => setLogoutCheck(false)}
               width='130px'
-              bgColor='#fff'
+              $bgColor='#fff'
               border='1px solid var(--border)'
               color='var(--gray)'
               padding='15px'

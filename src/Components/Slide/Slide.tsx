@@ -37,7 +37,7 @@ const Slide = () => {
             return (
               <Indicator
                 key={index}
-                bgColor={index === currentIndex}
+                $bgColor={index === currentIndex}
               ></Indicator>
             );
           })}
@@ -103,7 +103,7 @@ const IndicatorContainer = styled.div`
 `;
 
 type Indicator = {
-  bgColor?: boolean;
+  $bgColor?: boolean;
 };
 
 const Indicator = styled.div<Indicator>`
@@ -111,7 +111,7 @@ const Indicator = styled.div<Indicator>`
   height: 12px;
   flex-shrink: 0;
   border-radius: 50%;
-  background-color: ${(props) => (props.bgColor ? '#727272' : '#ffffff')};
+  background-color: ${(props) => (props.$bgColor ? '#727272' : '#ffffff')};
 `;
 
 export default Slide;
