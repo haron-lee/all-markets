@@ -43,4 +43,6 @@ const IdPwLayout = styled.div`
   margin-bottom: 50px;
 `;
 
+const PhoneNumberLayout = styled.div``;
+
 export default SignupForm;
