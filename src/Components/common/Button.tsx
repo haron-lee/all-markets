@@ -10,7 +10,7 @@ type ButtonProps = React.HTMLAttributes<HTMLButtonElement> & {
   border?: string;
   $mt?: string;
   noCursor?: boolean;
-  disabled?: boolean;
+  $disabled?: boolean;
   style?: CSSProperties;
 };
 
@@ -35,16 +35,11 @@ const BtnStyle = styled.button<ButtonProps>`
   margin-top: ${(props) => (props.$mt ? props.$mt : '0px')};
 
   ${(props) =>
-    props.disabled &&
+    props.$disabled &&
     css`
       background-color: var(--border);
-    `};
-
-  ${(props) =>
-    props.noCursor &&
-    css`
       cursor: default;
-    `}
+    `};
 `;
 
 export default Button;
