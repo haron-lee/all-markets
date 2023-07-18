@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Nav from '../Components/common/Nav';
-import Footer from '../Components/layout/Footer';
+import Footer from '../Components/common/Footer';
 import styled from 'styled-components';
 import ProductDetailDesc from '../Components/Product/ProductDetailDesc';
 import ProductDetailIndicator from '../Components/Product/ProductDetailIndicator';
