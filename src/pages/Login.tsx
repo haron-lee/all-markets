@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import loginType from '../Recoil/loginTypeContext/loginTypeAtom';
 import Logo from '../assets/icons/Logo-hodu.png';
-import LoginForm from '../Components/SignForm/LoginForm';
+import LoginForm from '../Components/Login/LoginForm';
 import UserButton from '../Components/common/UserButton';
 import { useRecoilState } from 'recoil';
 import { SignLayout, SignStyle } from '../Components/style/SignLayout';
