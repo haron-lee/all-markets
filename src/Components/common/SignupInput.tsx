@@ -13,13 +13,14 @@ type SignupInputProps = React.InputHTMLAttributes<HTMLInputElement> & {
   $checkIcon?: boolean;
   $up?: boolean;
   $arrow?: boolean;
+  $star?: boolean;
 };
 
 const SignupInput = (props: SignupInputProps) => {
-  const { type, label, ...rest } = props;
+  const { type, label, $star, ...rest } = props;
   return (
     <>
-      <SignupLabelStyle>
+      <SignupLabelStyle $star={$star}>
         {label}
         <SignupInputStyle type={type} {...rest} />
       </SignupLabelStyle>
@@ -27,10 +28,23 @@ const SignupInput = (props: SignupInputProps) => {
   );
 };
 
-const SignupLabelStyle = styled.label`
+const SignupLabelStyle = styled.label<SignupInputProps>`
   width: 100%;
   font-size: 16px;
   color: var(--gray);
+
+  ${(props) =>
+    props.$star &&
+    css`
+      &::before {
+        content: '*';
+        display: inline-block;
+        width: 5px;
+        height: 5px;
+        margin-right: 5px;
+        color: red;
+      }
+    `}
 `;
 
 type StyledInputProps = {
@@ -45,6 +59,7 @@ const SignupInputStyle = styled.input<StyledInputProps>`
   margin-top: 10px;
   width: 100%;
   padding: 17px;
+  padding-right: 29px;
   border: 1px solid var(--border);
   border-radius: 5px;
   font-size: 16px;
