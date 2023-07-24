@@ -56,10 +56,7 @@ const LoginForm = ({ userInput, setUserInput }: LoginForm) => {
 
   const handleLogin = async () => {
     try {
-      const modifiedUserInput = {
-        userInput: userInput,
-      };
-      const accountData = await loginAPI(modifiedUserInput);
+      const accountData = await loginAPI(userInput);
       console.log(accountData);
       const receivedToken = accountData.token;
       localStorage.setItem('token', receivedToken);

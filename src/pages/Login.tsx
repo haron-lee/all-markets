@@ -37,8 +37,6 @@ const Login = () => {
     }
   };
 
-  console.log(type);
-
   return (
     <>
       <SignLayout>
