@@ -24,8 +24,6 @@ const signupAPI = async <T extends UserInput>(userInput: T, type: string) => {
     });
 
     const data = await response.json();
-    console.log(userInput);
-    console.log(data?.username);
     if (response.ok) {
       console.log(data);
       return data;
@@ -33,7 +31,7 @@ const signupAPI = async <T extends UserInput>(userInput: T, type: string) => {
       Array.isArray(data?.username) ||
       Array.isArray(data?.phone_number)
     ) {
-      return data.username;
+      return Array.isArray(data.username) ? data.username : data.phone_number;
     }
   } catch (error) {
     console.error('회원가입 API 에러가 발생했습니다', error);
