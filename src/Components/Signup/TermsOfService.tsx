@@ -1,14 +1,19 @@
-import { useState } from 'react';
+import { SetStateAction, useState } from 'react';
 import { styled } from 'styled-components';
 
 import checkbox from '../../assets/icons/check-box.svg';
 import checkFillBox from '../../assets/icons/check-fill-box.svg';
 
-const TermsOfService = () => {
-  const [isChecked, setIsChecked] = useState(false);
+type TermsOfServiceProps = {
+  termCheck?: boolean;
+  setTermCheck?: React.Dispatch<SetStateAction<boolean>>;
+};
 
+const TermsOfService = ({ termCheck, setTermCheck }: TermsOfServiceProps) => {
   const handleCheckboxChange = () => {
-    setIsChecked(!isChecked);
+    if (setTermCheck) {
+      setTermCheck(!termCheck);
+    }
   };
 
   return (
@@ -18,10 +23,10 @@ const TermsOfService = () => {
           type='checkbox'
           id='terms'
           className='a11y-hidden'
-          checked={isChecked}
+          checked={termCheck}
           onChange={handleCheckboxChange}
         />
-        <Checkbox $isChecked={isChecked} />
+        <Checkbox $isChecked={termCheck} />
         모두의 마켓의 <strong>이용약관</strong> 및{' '}
         <strong>개인정보처리방침</strong>에 대한 내용을 확인하였고 동의합니다.
       </TermsOfServiceLayout>
