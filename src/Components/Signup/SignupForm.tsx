@@ -1,4 +1,5 @@
 import React, { useRef, useState, useEffect, ChangeEvent } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { styled } from 'styled-components';
 import { SignStyle } from 'Components/style/SignLayout';
 
@@ -6,22 +7,60 @@ import Form from 'Components/common/Form';
 import SignupInput from 'Components/common/SignupInput';
 import TermsOfService from './TermsOfService';
 import Button from 'Components/common/Button';
+import signupAPI from 'api/signupAPI';
 
-type SignupFormProps = React.HTMLAttributes<HTMLFormElement> & {
-  $userType?: String | undefined;
+type SignupFormProps = React.FormHTMLAttributes<HTMLFormElement> & {
+  $userType: string;
+};
+
+type signupParams = {
+  userInput: {
+    username?: string | undefined;
+    password?: string | undefined;
+    password2?: string | undefined;
+    phone_number?: string | undefined;
+    name?: string | undefined;
+    company_registration_number?: string | undefined;
+    store_name?: string | undefined;
+  };
 };
 
 const SignupForm = ({ $userType, ...rest }: SignupFormProps) => {
+  const navigate = useNavigate();
+  const [selectBox, setSelectBox] = useState(false);
+  const [selectedDigit, setSelectedDigit] = useState('010');
+  const [middleDigit, setMiddleDigit] = useState('');
+  const [lastDigit, setLastDigit] = useState('');
+  const selectBoxRef = useRef<HTMLDivElement>(null);
+  const [errorRes, setErrorRes] = useState('');
+
   const [userInput, setUserInput] = useState({
     username: '',
     password: '',
     password2: '',
-    phone_number: '',
+    phone_number: selectedDigit + middleDigit + lastDigit,
     name: '',
   });
-  const [selectBox, setSelectBox] = useState(false);
-  const [selectedDigit, setSelectedDigit] = useState('010');
-  const selectBoxRef = useRef<HTMLDivElement>(null);
+  const [sellerInput, setSellerInput] = useState({
+    username: '',
+    password: '',
+    password2: '',
+    phone_number: selectedDigit + middleDigit + lastDigit,
+    name: '',
+    company_registration_number: '',
+    store_name: '',
+  });
+
+  console.log(userInput);
+
+  //TODO 이부분 테스트해야함!!!!
+  let finalUserInput: signupParams['userInput'];
+
+  if ($userType === 'BUYER') {
+    finalUserInput = { ...userInput };
+  } else if ($userType === 'SELLER') {
+    finalUserInput = { ...userInput, ...sellerInput };
+  }
 
   const handleSelectBox = (e: React.MouseEvent<HTMLInputElement>) => {
     e.stopPropagation();
@@ -32,6 +71,27 @@ const SignupForm = ({ $userType, ...rest }: SignupFormProps) => {
     const selected: string | null = e.currentTarget.textContent;
     setSelectedDigit(selected || '');
     setSelectBox(false);
+  };
+
+  useEffect(() => {
+    setUserInput((prev) => ({
+      ...prev,
+      phone_number: selectedDigit + middleDigit + lastDigit,
+    }));
+    setSellerInput((prev) => ({
+      ...prev,
+      phone_number: selectedDigit + middleDigit + lastDigit,
+    }));
+  }, [selectedDigit, middleDigit, lastDigit]);
+
+  const handleDigitInput = (e: ChangeEvent<HTMLInputElement>) => {
+    const digit = e.target.value;
+    const name = e.target.name;
+    if (name === 'middleDigit') {
+      setMiddleDigit(digit);
+    } else if (name === 'lastDigit') {
+      setLastDigit(digit);
+    }
   };
 
   // NOTE : select box 바깥 클릭시 false
@@ -53,12 +113,29 @@ const SignupForm = ({ $userType, ...rest }: SignupFormProps) => {
 
   const handleUserInput = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    console.log(name);
 
-    setUserInput((prev) => ({
-      ...prev,
-      [name]: value.trim(),
-    }));
+    if ($userType === 'BUYER') {
+      setUserInput((prev) => ({
+        ...prev,
+        [name]: value.trim(),
+      }));
+    } else if ($userType === 'SELLER') {
+      setSellerInput((prev) => ({
+        ...prev,
+        [name]: value.trim(),
+      }));
+    }
+  };
+
+  const handleSignupSubmit = async (e: { preventDefault: () => void }) => {
+    e.preventDefault();
+    const signupRes = await signupAPI(finalUserInput, $userType);
+    if (Array.isArray(signupRes)) {
+      setErrorRes(signupRes.join());
+    } else if (typeof signupRes === 'object') {
+      navigate('/login');
+      console.log(signupRes);
+    }
   };
 
   return (
@@ -70,16 +147,23 @@ const SignupForm = ({ $userType, ...rest }: SignupFormProps) => {
               id='sign-id'
               label='아이디'
               $star
+              name='username'
               value={userInput.username}
               onChange={handleUserInput}
+              autoComplete='on'
             />
+            {errorRes === '해당 사용자 아이디는 이미 존재합니다.' && (
+              <p>{errorRes}</p>
+            )}
             <SignupInput
               type='password'
               id='sign-pw'
               label='비밀번호'
               $checkIcon
               $star
+              name='password'
               value={userInput.password}
+              onChange={handleUserInput}
             />
             <SignupInput
               type='password'
@@ -88,10 +172,19 @@ const SignupForm = ({ $userType, ...rest }: SignupFormProps) => {
               $checkIcon
               $checked={true}
               $star
+              name='password2'
               value={userInput.password2}
+              onChange={handleUserInput}
             />
           </IdPwLayout>
-          <SignupInput id='sign-username' label='이름' $star />
+          <SignupInput
+            id='sign-username'
+            label='이름'
+            $star
+            value={userInput.name}
+            name='name'
+            onChange={handleUserInput}
+          />
           <PhoneNumberLayout ref={selectBoxRef}>
             <SignupInput
               type='button'
@@ -101,6 +194,7 @@ const SignupForm = ({ $userType, ...rest }: SignupFormProps) => {
               $arrow
               $up={selectBox}
               $star
+              name='phone_number'
             />
             {selectBox && (
               <PhoneSelectBox>
@@ -111,8 +205,18 @@ const SignupForm = ({ $userType, ...rest }: SignupFormProps) => {
                 <li onClick={handleDigitClick}>018</li>
               </PhoneSelectBox>
             )}
-            <SignupInput id='sign-middle_digit' />
-            <SignupInput id='sign-last_digit' />
+            <SignupInput
+              id='sign-middle_digit'
+              value={middleDigit}
+              name='middleDigit'
+              onChange={handleDigitInput}
+            />
+            <SignupInput
+              id='sign-last_digit'
+              value={lastDigit}
+              name='lastDigit'
+              onChange={handleDigitInput}
+            />
           </PhoneNumberLayout>
           <EmailLayout>
             <label htmlFor='sign-email_id'>이메일</label>
@@ -125,7 +229,7 @@ const SignupForm = ({ $userType, ...rest }: SignupFormProps) => {
         </Form>
       </SignStyle>
       <TermsOfService />
-      <Button>가입하기</Button>
+      <Button onClick={handleSignupSubmit}>가입하기</Button>
     </>
   );
 };

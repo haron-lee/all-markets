@@ -6,7 +6,7 @@ import loginCheck from '../../Recoil/loginCheckContext/loginCheckAtom.ts';
 import Form from '../common/Form.tsx';
 import LoginInput from '../common/LoginInput.tsx';
 import Button from '../common/Button.tsx';
-import loginAPI from '../../api/LoginAPI.ts';
+import loginAPI from '../../api/loginAPI.ts';
 
 // NOTE: interface와 type, 유니온 타입
 /*
@@ -57,7 +57,6 @@ const LoginForm = ({ userInput, setUserInput }: LoginForm) => {
   const handleLogin = async () => {
     try {
       const accountData = await loginAPI(userInput);
-      console.log(accountData);
       const receivedToken = accountData.token;
       localStorage.setItem('token', receivedToken);
       setLoginChecked(true);
