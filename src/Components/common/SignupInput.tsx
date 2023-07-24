@@ -6,7 +6,7 @@ import up from '../../assets/icons/icon-up-arrow.svg';
 import down from '../../assets/icons/icon-down-arrow.svg';
 
 type SignupInputProps = React.InputHTMLAttributes<HTMLInputElement> & {
-  type?: 'text' | 'password' | 'tel' | 'button' | undefined;
+  type?: 'text' | 'password' | 'tel' | 'button' | 'number' | undefined;
   value?: string | (readonly string[] & string) | undefined;
   label?: string;
   $checked?: boolean;
@@ -14,6 +14,8 @@ type SignupInputProps = React.InputHTMLAttributes<HTMLInputElement> & {
   $up?: boolean;
   $arrow?: boolean;
   $star?: boolean;
+  $warning?: boolean;
+  $center?: boolean;
 };
 
 const SignupInput = (props: SignupInputProps) => {
@@ -52,6 +54,8 @@ type StyledInputProps = {
   $checkIcon?: boolean;
   $up?: boolean;
   $arrow?: boolean;
+  $warning?: boolean;
+  $center?: boolean;
 };
 
 const SignupInputStyle = styled.input<StyledInputProps>`
@@ -60,7 +64,9 @@ const SignupInputStyle = styled.input<StyledInputProps>`
   width: 100%;
   padding: 17px;
   padding-right: 29px;
-  border: 1px solid var(--border);
+  text-align: ${(props) => (props.$center ? 'center' : 'start')};
+  border: ${(props) =>
+    props.$warning ? '1px solid var(--error)' : '1px solid var(--border)'};
   border-radius: 5px;
   font-size: 16px;
   background-color: #fff;
