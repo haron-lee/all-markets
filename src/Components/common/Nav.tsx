@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { useRecoilState, useRecoilValue } from 'recoil';
-import logoutAPI from '../../api/logoutAPI.ts';
-import loginCheck from '../../Recoil/loginCheckContext/loginCheckAtom.ts';
-import loginType from '../../Recoil/loginTypeContext/loginTypeAtom.ts';
+import logoutAPI from '../../api/logoutAPI';
+import loginCheck from '../../Recoil/loginCheckContext/loginCheckAtom';
+import loginType from '../../Recoil/loginTypeContext/loginTypeAtom';
 import Button from './Button';
 // Image
 import Logo from '../../assets/icons/Logo-hodu.png';
