@@ -18,6 +18,7 @@ const ProductCount = ({
   stock,
   setErrorMessage,
 }: ProductCountProps) => {
+  //eslint-disable-next-line
   const [inStock, setInStock] = useState(stock > 0);
 
   const increaseCount = () => {
