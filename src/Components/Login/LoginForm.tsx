@@ -6,7 +6,7 @@ import loginCheck from '../../Recoil/loginCheckContext/loginCheckAtom';
 import Form from '../common/Form';
 import LoginInput from '../common/LoginInput';
 import Button from '../common/Button';
-import loginAPI from 'api/loginAPI';
+import loginAPI from 'api/login';
 
 // NOTE: interface와 type, 유니온 타입
 /*
